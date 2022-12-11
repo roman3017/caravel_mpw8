@@ -1,12 +1,29 @@
-# Caravel User Project
+# MPW shuttle (WIP)
+## USB2TTL
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![UPRJ_CI](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml) [![Caravel Build](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml)
+```sh
+mkdir -p dependencies
+export OPENLANE_ROOT=$(pwd)/dependencies/openlane_src
+export PDK_ROOT=$(pwd)/dependencies/pdks
+export PDK=sky130A
+make setup
 
-| :exclamation: Important Note            |
-|-----------------------------------------|
+make user_proj_example
+klayout -l dependencies/pdks/gf180mcuC/libs.tech/klayout/tech/gf180mcu.lyp gds/user_proj_example.gds
 
-## Please fill in your project documentation in this README.md file 
+make user_project_wrapper
+klayout -l dependencies/pdks/gf180mcuC/libs.tech/klayout/tech/gf180mcu.lyp gds/user_project_wrapper.gds
 
-Refer to [README](docs/source/index.rst#section-quickstart) for a quickstart of how to use caravel_user_project
+make verify
+#make extract-parasitics
+make create-spef-mapping
+#make caravel-sta
+rm -rf ~/mpw_precheck/
+make precheck
+make run-precheck
+#make compress
+```
 
-Refer to [README](docs/source/index.rst) for this sample project documentation. 
+## References
+[QUICKSTART] (https://caravel-user-project.readthedocs.io/en/latest) for a QSG.
+[README](docs/source/index.rst) for a sample project documentation. 
