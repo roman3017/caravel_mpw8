@@ -1,3 +1,6 @@
-[submodule "verilog/rtl/tinyfpga_bx_usbserial"]
-	path = verilog/rtl/tinyfpga_bx_usbserial
-	url = https://github.com/davidthings/tinyfpga_bx_usbserial.git
+[submodule "verilog/rtl/usb_cdc"]
+	path = verilog/rtl/usb_cdc
+	url = https://github.com/ulixxe/usb_cdc
+[submodule "verilog/rtl/verilog-uart"]
+	path = verilog/rtl/verilog-uart
+	url = https://github.com/alexforencich/verilog-uart
