@@ -16,15 +16,18 @@ DEPS = \
 ../usb_cdc/usb_cdc/usb_cdc.v \
 ../usb_cdc/examples/common/hdl/prescaler.v \
 ../usb_cdc/examples/common/hdl/fifo_if.v \
+../verilog-uart/rtl/uart_rx.v \
+../verilog-uart/rtl/uart_tx.v \
+../verilog-uart/rtl/uart.v \
 ../usb_cdc/examples/TinyFPGA-BX/hdl/soc/app.v
 PIN_DEF = fpga_pins.pcf
 
 # TinyFPGA-BX
 FPGA_SIZE = 8k
-FPGA_TYPE = hx
+FPGA_TYPE = lp
 FPGA_PACK = cm81
 
-all: sint
+all: sint time
 
 sim: $(NAME)_tb.vcd
 	gtkwave $< $(<:.vcd=.gtkw) &
@@ -52,7 +55,7 @@ time: $(NAME).rpt
 	./$(@:.vcd=.out)
 
 .v.json:
-	yosys -p "synth_ice40 -json $@" $^
+	yosys -p "$(foreach file,$^,read_verilog $(file);)" -p "synth_ice40 -json $@" $^
 
 .json.asc:
 	nextpnr-ice40 --$(FPGA_TYPE)$(FPGA_SIZE) --package $(FPGA_PACK) --pcf-allow-unconstrained --pcf $(PIN_DEF) --json $< --asc $@
