@@ -16,10 +16,10 @@ DEPS = \
 ../usb_cdc/usb_cdc/usb_cdc.v \
 ../usb_cdc/examples/common/hdl/prescaler.v \
 ../usb_cdc/examples/common/hdl/fifo_if.v \
+pll.v \
 ../verilog-uart/rtl/uart_rx.v \
 ../verilog-uart/rtl/uart_tx.v \
-../verilog-uart/rtl/uart.v \
-../usb_cdc/examples/TinyFPGA-BX/hdl/soc/app.v
+../verilog-uart/rtl/uart.v
 PIN_DEF = fpga_pins.pcf
 
 # TinyFPGA-BX
