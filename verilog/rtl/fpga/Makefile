@@ -27,7 +27,12 @@ FPGA_SIZE = 8k
 FPGA_TYPE = lp
 FPGA_PACK = cm81
 
+CLK_MHZ = 48
+
 all: sint time
+
+pll.v:
+	icepll -i 16 -o $(CLK_MHZ) -m -f $@
 
 sim: $(NAME)_tb.vcd
 	gtkwave $< $(<:.vcd=.gtkw) &
@@ -58,7 +63,7 @@ time: $(NAME).rpt
 	yosys -p "$(foreach file,$^,read_verilog $(file);)" -p "synth_ice40 -json $@" $^
 
 .json.asc:
-	nextpnr-ice40 --$(FPGA_TYPE)$(FPGA_SIZE) --package $(FPGA_PACK) --pcf-allow-unconstrained --pcf $(PIN_DEF) --json $< --asc $@
+	nextpnr-ice40 --$(FPGA_TYPE)$(FPGA_SIZE) --freq $(CLK_MHZ) --package $(FPGA_PACK) --pcf-allow-unconstrained --pcf $(PIN_DEF) --json $< --asc $@
 
 .asc.bin:
 	icepack $< $@

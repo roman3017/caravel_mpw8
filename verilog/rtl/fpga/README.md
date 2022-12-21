@@ -1,6 +1,29 @@
+# Similation tests
+
+## UART
+
+```sh
+cd verilog/rtl/
+iverilog test_uart.v verilog-uart/rtl/uart.v verilog-uart/rtl/uart_rx.v verilog-uart/rtl/uart_tx.v -o test_uart.out
+
+./test_uart.out
+gtkwave test_uart.vcd
+```
+
+## USB
+
+```sh
+cd verilog/rtl/usb_cdc/
+git apply ../0001-fix-make-targets.patch
+
+cd examples/TinyFPGA-BX/OSS_CAD_Suite/
+make PROJ=soc clean sim
+make PROJ=soc wave
+```
+
 # FPGA tests
 
-Use TinyFPGA to test.
+Use TinyFPGA_BX to test.
 
 ## USB
 
@@ -16,9 +39,9 @@ tinyprog -b
 minicom -D /dev/ttyACM0
 ```
 
-## USB2TTL
+## USB2UART
 
-Attach another USB2TTL to pins 4,5 and see characters being passed between.
+Attach another USB2UART to the first three pins on TinyFPGA_BX: GND, 1(RX), and 2(TX). One should see characters being passed between.
 
 ```sh
 tinyprog -l
