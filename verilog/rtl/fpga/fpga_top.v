@@ -68,16 +68,11 @@ module fpga_top (
 
    usb_cdc #(
       .VENDORID(16'h1D50),
-      .PRODUCTID(16'h6130),
-      .IN_BULK_MAXPACKETSIZE('d8),
-      .OUT_BULK_MAXPACKETSIZE('d8),
-      .BIT_SAMPLES(BIT_SAMPLES),
-      .USE_APP_CLK(0),
-      .APP_CLK_RATIO(c_CLKS_PER_BIT)
+      .PRODUCTID(16'h6130)
    ) u_usb_cdc (
       .clk_i(clk_pll), // 48MHz
       .rstn_i(rstn),
-      .app_clk_i(),
+      .app_clk_i(1'b0),
       .out_data_o(out_data),
       .out_valid_o(out_valid),
       .out_ready_i(out_ready),

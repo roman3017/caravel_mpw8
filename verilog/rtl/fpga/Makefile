@@ -53,17 +53,17 @@ time: $(NAME).rpt
 .SUFFIXES: .asc .bin .json .v .vcd .rpt
 
 .asc.rpt:
-	icetime -d $(FPGA_TYPE)$(FPGA_SIZE) -P $(FPGA_PACK) -mtr $@ $^
+	icetime -d $(FPGA_TYPE)$(FPGA_SIZE) -mtr $@ $<
 
 .v.vcd:
 	iverilog $^ -o $(@:.vcd=.out)
 	./$(@:.vcd=.out)
 
 .v.json:
-	yosys -p "$(foreach file,$^,read_verilog $(file);)" -p "synth_ice40 -json $@" $^
+	yosys -q -p 'synth_ice40 -top $(NAME) -json $@' $^
 
 .json.asc:
-	nextpnr-ice40 --$(FPGA_TYPE)$(FPGA_SIZE) --freq $(CLK_MHZ) --package $(FPGA_PACK) --pcf-allow-unconstrained --pcf $(PIN_DEF) --json $< --asc $@
+	nextpnr-ice40 --$(FPGA_TYPE)$(FPGA_SIZE) --freq $(CLK_MHZ) --opt-timing --package $(FPGA_PACK) --pcf $(PIN_DEF) --json $< --asc $@
 
 .asc.bin:
 	icepack $< $@
