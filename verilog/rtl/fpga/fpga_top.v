@@ -1,7 +1,7 @@
 module fpga_top (
    input  clk, // 16MHz Clock
    output led, // User LED ON=1, OFF=0
-   input uart_rx, // uart in
+   input  uart_rx, // uart in
    output uart_tx, // uart out
    inout  usb_p, // USB+
    inout  usb_n, // USB-
@@ -11,7 +11,6 @@ module fpga_top (
    localparam BIT_SAMPLES       = 4;
    localparam c_CLOCK_MHZ       = BIT_SAMPLES*12;
    localparam c_UART_SPEED      = 115200;
-   localparam c_CLKS_PER_BIT    = c_CLOCK_MHZ*1000000/c_UART_SPEED;
    localparam c_CLKS_PER_BYTE   = (c_CLOCK_MHZ*1000000+c_UART_SPEED*8-1)/(c_UART_SPEED*8);
 
    wire             clk_pll; //48MHz clock
@@ -24,17 +23,16 @@ module fpga_top (
    wire             dn_tx;
    wire             tx_en;
 
-   reg              in_ready;
+   wire             in_ready;
    wire [7:0]       in_data;
    wire             in_valid;
    wire             out_ready;
-   reg [7:0]        out_data;
-   reg              out_valid;
+   wire [7:0]       out_data;
+   wire             out_valid;
 
    pll pll48( .clock_in(clk), .clock_out(clk_pll), .locked( lock ) );
 
    assign led = 1'b1;
-   //assign usb_pu = dp_pu;
 
    reg [1:0]        rstn_sync;
    wire             rstn;
@@ -53,11 +51,13 @@ module fpga_top (
       .clk(clk_pll),
       .rst(~rstn),
 
+      //data input to uart tx
       .s_axis_tdata(out_data),
       .s_axis_tvalid(out_valid),
       .s_axis_tready(out_ready),
       .txd(uart_tx),
 
+      //data output from uart rx
       .m_axis_tdata(in_data),
       .m_axis_tvalid(in_valid),
       .m_axis_tready(in_ready),
@@ -73,14 +73,20 @@ module fpga_top (
       .clk_i(clk_pll), // 48MHz
       .rstn_i(rstn),
       .app_clk_i(1'b0),
+
+      //data output from usb rx
       .out_data_o(out_data),
       .out_valid_o(out_valid),
       .out_ready_i(out_ready),
+
+      //data input to usb tx
       .in_data_i(in_data),
       .in_valid_i(in_valid),
       .in_ready_o(in_ready),
+
       .frame_o(),
       .configured_o(),
+
       .dp_pu_o(dp_pu),
       .tx_en_o(tx_en),
       .dp_tx_o(dp_tx),

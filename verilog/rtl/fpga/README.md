@@ -1,10 +1,9 @@
-# Similation tests
+# Simulation tests
 
 ## UART
 
 ```sh
-cd verilog/rtl/
-iverilog test_uart.v verilog-uart/rtl/uart.v verilog-uart/rtl/uart_rx.v verilog-uart/rtl/uart_tx.v -o test_uart.out
+iverilog test_uart.v ../verilog-uart/rtl/uart.v ../verilog-uart/rtl/uart_rx.v ../verilog-uart/rtl/uart_tx.v -o test_uart.out
 
 ./test_uart.out
 gtkwave test_uart.vcd
@@ -13,7 +12,7 @@ gtkwave test_uart.vcd
 ## USB
 
 ```sh
-cd verilog/rtl/usb_cdc/
+cd ../usb_cdc/
 git apply ../0001-fix-make-targets.patch
 
 cd examples/TinyFPGA-BX/OSS_CAD_Suite/

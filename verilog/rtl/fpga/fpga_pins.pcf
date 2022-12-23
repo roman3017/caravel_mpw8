@@ -5,7 +5,7 @@
 set_io usb_pu A3
 set_io usb_n A4
 set_io usb_p B4
-set_io uart_rx A2
-set_io uart_tx A1
+set_io uart_tx A2
+set_io uart_rx A1
 set_io led B3
 set_io clk B2
