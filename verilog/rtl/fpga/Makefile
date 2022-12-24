@@ -69,6 +69,6 @@ time: $(NAME).rpt
 	icepack $< $@
 
 clean:
-	rm -f *.bin *.asc *.json *.out *.vcd *.rpt
+	rm -f *.bin *.asc *.json *.out *.vcd *.rpt pll.v
 
 .PHONY: all sim sint prog clean time

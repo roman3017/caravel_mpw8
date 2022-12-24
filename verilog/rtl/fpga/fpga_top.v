@@ -13,7 +13,7 @@ module fpga_top (
    localparam c_UART_SPEED      = 115200;
    localparam c_CLKS_PER_BYTE   = (c_CLOCK_MHZ*1000000+c_UART_SPEED*8-1)/(c_UART_SPEED*8);
 
-   wire             clk_pll; //48MHz clock
+   wire             clk_pll;
    wire             lock;
 
    wire             dp_pu;
@@ -70,7 +70,7 @@ module fpga_top (
       .VENDORID(16'h1D50),
       .PRODUCTID(16'h6130)
    ) u_usb_cdc (
-      .clk_i(clk_pll), // 48MHz
+      .clk_i(clk_pll),
       .rstn_i(rstn),
       .app_clk_i(1'b0),
 
