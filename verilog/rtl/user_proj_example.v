@@ -148,7 +148,7 @@ module user_proj_example #(
     assign io_out[`MPRJ_IO_PADS-1] = usb_pu;
 
     usb2uart usb2uart (
-        .clk48(user_clk),
+        .clk48(user_clock2),
         .rst(wb_rst_i),
         .uart_rx(uart_rx),
         .uart_tx(uart_tx),
