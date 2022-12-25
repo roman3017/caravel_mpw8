@@ -65,6 +65,9 @@ module user_proj_example #(
     output [`MPRJ_IO_PADS-1:0] io_out,
     output [`MPRJ_IO_PADS-1:0] io_oeb,
 
+    // User clock
+    input user_clock2,
+
     // IRQ
     output [2:0] irq
 );
@@ -90,8 +93,8 @@ module user_proj_example #(
     assign wdata = wbs_dat_i;
 
     // IO
-    assign io_out = count;
-    assign io_oeb = {(`MPRJ_IO_PADS-1){rst}};
+    assign io_out[`MPRJ_IO_PADS-6:0] = {1'b0, count};
+    assign io_oeb[`MPRJ_IO_PADS-6:0] = {(`MPRJ_IO_PADS-5){rst}};
 
     // IRQ
     assign irq = 3'b000;	// Unused
@@ -106,7 +109,7 @@ module user_proj_example #(
 
     counter #(
         .BITS(BITS)
-    ) counter(
+    ) counter (
         .clk(clk),
         .reset(rst),
         .ready(wbs_ack_o),
@@ -117,6 +120,42 @@ module user_proj_example #(
         .la_write(la_write),
         .la_input(la_data_in[63:32]),
         .count(count)
+    );
+
+    wire uart_rx;
+    wire uart_tx;
+    wire usb_p;
+    wire usb_n;
+    wire usb_pu;
+    wire usb_tx_en;
+
+    // io_out[33] input uart_rx
+    assign io_oeb[`MPRJ_IO_PADS-5] = 1'b0;
+    assign uart_rx = io_out[`MPRJ_IO_PADS-5];
+    // io_out[34] output uart_tx
+    assign io_oeb[`MPRJ_IO_PADS-4] = 1'b1;
+    assign io_out[`MPRJ_IO_PADS-4] = uart_tx;
+    // io_out[35] inout usb_p
+    assign io_oeb[`MPRJ_IO_PADS-3] = usb_tx_en;
+    assign io_out[`MPRJ_IO_PADS-3] = /* usb_tx_en ? */ usb_p;
+    assign usb_p = io_out[`MPRJ_IO_PADS-3];
+    // io_out[36] inout usb_n
+    assign io_oeb[`MPRJ_IO_PADS-2] = usb_tx_en;
+    assign io_out[`MPRJ_IO_PADS-2] = /* usb_tx_en ? */ usb_n;
+    assign usb_n = io_out[`MPRJ_IO_PADS-2];
+    // io_out[37] output usb_pu
+    assign io_oeb[`MPRJ_IO_PADS-1] = 1'b1;
+    assign io_out[`MPRJ_IO_PADS-1] = usb_pu;
+
+    usb2uart usb2uart (
+        .clk48(user_clk),
+        .rst(wb_rst_i),
+        .uart_rx(uart_rx),
+        .uart_tx(uart_tx),
+        .usb_p(usb_p),
+        .usb_n(usb_n),
+        .usb_pu(usb_pu),
+        .usb_tx_en(usb_tx_en)
     );
 
 endmodule

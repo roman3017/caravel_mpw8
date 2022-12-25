@@ -1,5 +1,5 @@
 # MPW shuttle (WIP)
-## USB2TTL
+## USB2UART
 
 ```sh
 mkdir -p dependencies
@@ -9,10 +9,10 @@ export PDK=sky130A
 make setup
 
 make user_proj_example
-klayout -l dependencies/pdks/gf180mcuC/libs.tech/klayout/tech/gf180mcu.lyp gds/user_proj_example.gds
+klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user_proj_example.gds
 
 make user_project_wrapper
-klayout -l dependencies/pdks/gf180mcuC/libs.tech/klayout/tech/gf180mcu.lyp gds/user_project_wrapper.gds
+klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user_project_wrapper.gds
 
 make verify
 #make extract-parasitics

@@ -6,6 +6,7 @@
 
 NAME = fpga_top
 DEPS = \
+../usb2uart.v \
 ../usb_cdc/usb_cdc/phy_tx.v \
 ../usb_cdc/usb_cdc/phy_rx.v \
 ../usb_cdc/usb_cdc/sie.v \

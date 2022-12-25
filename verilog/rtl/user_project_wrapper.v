@@ -114,6 +114,9 @@ user_proj_example mprj (
     .io_out(io_out),
     .io_oeb(io_oeb),
 
+    // User clock
+    .user_clock2(user_clock2),
+
     // IRQ
     .irq(user_irq)
 );

@@ -13,7 +13,7 @@ gtkwave test_uart.vcd
 
 ```sh
 cd ../usb_cdc/
-git apply ../0001-fix-make-targets.patch
+git apply ../0001-usb_cdc-fix-make-targets.patch
 
 cd examples/TinyFPGA-BX/OSS_CAD_Suite/
 make PROJ=soc clean sim
