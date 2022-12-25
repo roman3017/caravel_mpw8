@@ -40,14 +40,14 @@ minicom -D /dev/ttyACM0
 
 ## USB2UART
 
-Attach another USB2UART to the first three pins on TinyFPGA_BX: GND, 1(RX), and 2(TX). One should see characters being passed between.
+Attach another USB-TTL device to the first three pins on TinyFPGA_BX: GND, 1(RX), and 2(TX). One should see characters being passed between.
 
 ```sh
 tinyprog -l
-make clean all
-make prog
-tinyprog -b
+make clean prog
+#tinyprog -b
 
+#open two terminals and connect them to usb2serial ports to see characters passed between them
 minicom -D /dev/ttyACM0
 minicom -D /dev/ttyUSB0
 ```

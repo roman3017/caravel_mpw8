@@ -25,4 +25,18 @@
 `else
     `include "user_project_wrapper.v"
     `include "user_proj_example.v"
+    `include "usb2uart.v"
+    `include "usb_cdc/usb_cdc/phy_tx.v",
+    `include "usb_cdc/usb_cdc/phy_rx.v",
+    `include "usb_cdc/usb_cdc/sie.v",
+    `include "usb_cdc/usb_cdc/ctrl_endp.v",
+    `include "usb_cdc/usb_cdc/in_fifo.v",
+    `include "usb_cdc/usb_cdc/out_fifo.v",
+    `include "usb_cdc/usb_cdc/bulk_endp.v",
+    `include "usb_cdc/usb_cdc/usb_cdc.v",
+    `include "usb_cdc/examples/common/hdl/prescaler.v",
+    `include "usb_cdc/examples/common/hdl/fifo_if.v",
+    `include "verilog-uart/rtl/uart_rx.v",
+    `include "verilog-uart/rtl/uart_tx.v",
+    `include "verilog/rtl/verilog-uart/rtl/uart.v"
 `endif
