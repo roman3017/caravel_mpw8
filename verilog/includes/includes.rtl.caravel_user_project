@@ -14,4 +14,4 @@
 -v $(USER_PROJECT_VERILOG)/rtl/usb_cdc/examples/common/hdl/fifo_if.v
 -v $(USER_PROJECT_VERILOG)/rtl/verilog-uart/rtl/uart_rx.v
 -v $(USER_PROJECT_VERILOG)/rtl/verilog-uart/rtl/uart_tx.v
--v $(USER_PROJECT_VERILOG)/rtl/verilog/rtl/verilog-uart/rtl/uart.v
+-v $(USER_PROJECT_VERILOG)/rtl/verilog-uart/rtl/uart.v

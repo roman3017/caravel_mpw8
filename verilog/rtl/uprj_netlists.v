@@ -38,5 +38,5 @@
     `include "usb_cdc/examples/common/hdl/fifo_if.v",
     `include "verilog-uart/rtl/uart_rx.v",
     `include "verilog-uart/rtl/uart_tx.v",
-    `include "verilog/rtl/verilog-uart/rtl/uart.v"
+    `include "verilog-uart/rtl/uart.v"
 `endif
