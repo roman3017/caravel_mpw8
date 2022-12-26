@@ -123,19 +123,11 @@ jobs:
 
       - name: Run DV RTL tests
         run: |
-          make verify-io_ports-rtl 
-          make verify-la_test1-rtl 
-          make verify-la_test2-rtl 
-          make verify-mprj_stimulus-rtl 
-          make verify-wb_port-rtl
+          make verify-all-rtl
 
       - name: Run DV GL tests
         run: |
-          make verify-io_ports-gl 
-          make verify-la_test1-gl 
-          make verify-la_test2-gl 
-          make verify-mprj_stimulus-gl 
-          make verify-wb_port-gl
+          make verify-all-gl
 
       - name: Push gds
         #if: github.event_name == 'workflow_dispatch'
@@ -226,16 +218,21 @@ jobs:
 
       - name: Run DV RTL tests
         run: |
-          make verify-io_ports-rtl 
-          make verify-la_test1-rtl 
-          make verify-la_test2-rtl 
-          make verify-mprj_stimulus-rtl 
-          make verify-wb_port-rtl
+          make verify-all-rtl
 
       - name: Run DV GL tests
         run: |
-          make verify-io_ports-gl 
-          make verify-la_test1-gl 
-          make verify-la_test2-gl 
-          make verify-mprj_stimulus-gl 
-          make verify-wb_port-gl
+          make verify-all-gl
+
+  tag_repo:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: tag
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          tag: ${{ steps.date.outputs.date }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
