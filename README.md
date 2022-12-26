@@ -32,8 +32,12 @@ make run-precheck
 
 ## References
 
- - [QUICKSTART](https://caravel-user-project.readthedocs.io/en/latest) For a QSG.
- - [README](docs/source/index.rst) For a sample project documentation.
- - [USB CDC](https://github.com/ulixxe/usb_cdc) IP taken from ulixxe
+ - [MPW-8](https://platform.efabless.com/shuttles/MPW-8) Shuttle projects (project 1758)
+ - [USB](https://github.com/ulixxe/usb_cdc) IP taken from ulixxe
  - [UART](https://github.com/alexforencich/verilog-uart) IP taken from alexforencich
- - [MPW shuttle](https://platform.efabless.com/shuttles/MPW-8) Submitted project 1758
+ - [Harness](https://caravel-harness.readthedocs.io/en/latest) Harness specification
+ - [OpenLane](https://openlane.readthedocs.io/en/latest) OpenLane documentation
+ - [Board](https://github.com/efabless/caravel_board) Test board
+ - [PLL ](https://github.com/kbeckmann/caravel-pll-calculator) PLL registers calculator
+ - [QSG](https://caravel-user-project.readthedocs.io/en/latest) Quick start guide
+ - [README](docs/source/index.rst) A sample project documentation

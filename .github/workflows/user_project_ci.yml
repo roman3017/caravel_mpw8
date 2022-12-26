@@ -137,6 +137,18 @@ jobs:
           make verify-mprj_stimulus-gl 
           make verify-wb_port-gl
 
+      - name: Push gds
+        #if: github.event_name == 'workflow_dispatch'
+        run: |
+          ls -la
+          git status
+          git add def gds lef mag maglef spi/lvs verilog/gl
+          git status
+          git config user.email "rbacik@hotmail.com"
+          git config user.name "roman3017"
+          git commit -m "action: update build"
+          git push origin HEAD:main
+
   user_project_flow_sky130B:
     timeout-minutes: 720
     runs-on: ubuntu-latest
