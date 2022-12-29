@@ -20,7 +20,7 @@
         "dir::../../verilog/rtl/verilog-uart/rtl/uart.v"
     ],
     "CLOCK_PERIOD": 10,
-    "CLOCK_PORT": "user_clock2 wb_clk_i",
+    "CLOCK_PORT": "user_clock2",
     "CLOCK_NET": "counter.clk",
     "FP_SIZING": "absolute",
     "DIE_AREA": "0 0 900 600",
