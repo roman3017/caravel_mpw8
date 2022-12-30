@@ -19,11 +19,13 @@ klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user
 make user_project_wrapper
 klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user_project_wrapper.gds
 
-make verify
-make SIM=GL verify
+make verify-usb2uart-rtl
+make verify-usb2uart-gl
+
 #make extract-parasitics
 make create-spef-mapping
 #make caravel-sta
+
 rm -rf ~/mpw_precheck/
 make precheck
 make run-precheck

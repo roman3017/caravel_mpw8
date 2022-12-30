@@ -11,6 +11,8 @@ module usb2uart (
     output usb_tx_en  // USB tx enabled
 );
 
+    wire             clk;
+
     wire             in_ready;
     wire [7:0]       in_data;
     wire             in_valid;
@@ -18,10 +20,12 @@ module usb2uart (
     wire [7:0]       out_data;
     wire             out_valid;
 
+    assign clk = clk48;
+
     uart # (
         .DATA_WIDTH(8)
     ) u_uart (
-        .clk(clk48),
+        .clk(clk),
         .rst(rst),
 
         //data input to uart tx
@@ -60,7 +64,7 @@ module usb2uart (
         .VENDORID(16'h1D50),
         .PRODUCTID(16'h6130)
     ) u_usb_cdc (
-        .clk_i(clk48),
+        .clk_i(clk),
         .rstn_i(~rst),
         .app_clk_i(1'b0),
 

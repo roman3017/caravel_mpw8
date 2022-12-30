@@ -93,16 +93,8 @@ jobs:
 
       - name: Harden using Openlane
         run: |
-          make clean-user_proj_example user_proj_example \
-          || make clean-user_proj_example user_proj_example \
-          || make clean-user_proj_example user_proj_example \
-          || make clean-user_proj_example user_proj_example \
-          || make clean-user_proj_example user_proj_example
-          make clean-user_project_wrapper user_project_wrapper \
-          || clean-user_project_wrapper make user_project_wrapper \
-          || clean-user_project_wrapper make user_project_wrapper \
-          || clean-user_project_wrapper make user_project_wrapper \
-          || clean-user_project_wrapper make user_project_wrapper
+          make clean-user_proj_example user_proj_example
+          make clean-user_project_wrapper user_project_wrapper
 
       - name: run precheck
         run: |
@@ -131,11 +123,12 @@ jobs:
 
       - name: Run DV RTL tests
         run: |
-          make verify-all-rtl
+          make verify-usb2uart-rtl
 
       - name: Run DV GL tests
+        if: failure()
         run: |
-          make verify-all-gl
+          make verify-usb2uart-gl
 
       - name: Push gds
         if: github.event_name == 'workflow_dispatch'
@@ -226,11 +219,12 @@ jobs:
 
       - name: Run DV RTL tests
         run: |
-          make verify-all-rtl
+          make verify-usb2uart-rtl
 
       - name: Run DV GL tests
+        if: failure()
         run: |
-          make verify-all-gl
+          make verify-usb2uart-gl
 
   tag_repo:
     if: github.event_name == 'workflow_dispatch'

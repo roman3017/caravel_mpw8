@@ -62,24 +62,22 @@ void main()
     reg_mprj_io_17 = GPIO_MODE_MGMT_STD_OUTPUT;
     reg_mprj_io_16 = GPIO_MODE_MGMT_STD_OUTPUT;
 
-    //User COUNTER
-    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_9  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_8  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_7  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_6  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    //reg_mprj_io_6  = GPIO_MODE_MGMT_STD_OUTPUT;//mgmt_uart_tx
-    reg_mprj_io_5  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_4  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_3  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_2  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_1  = GPIO_MODE_USER_STD_OUT_MONITORED;
-    reg_mprj_io_0  = GPIO_MODE_USER_STD_OUT_MONITORED;
+    reg_mprj_io_15 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_14 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_13 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_12 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_11 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_10 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_9  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_8  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_7  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_6  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_5  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_4  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_3  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_2  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_1  = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_0  = GPIO_MODE_MGMT_STD_OUTPUT;
 
 	// Set UART clock to 64 kbaud (enable before I/O configuration)
 	// reg_uart_clkdiv = 625;
@@ -88,24 +86,6 @@ void main()
     /* Apply configuration */
     //reg_mprj_xfer = 1;
     //while (reg_mprj_xfer == 1);
-
-    // Configure LA probes [31:0], [127:64] as inputs to the cpu
-    // Configure LA probes [63:32] as outputs from the cpu
-    //reg_la0_oenb = reg_la0_iena = 0x00000000;    // [31:0]
-	//reg_la1_oenb = reg_la1_iena = 0xFFFFFFFF;    // [63:32]
-	//reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
-	//reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
-
-    // Flag start of the test
-    //reg_mprj_datal = 0xAB400000;
-
-    // Set Counter value to zero through LA probes [63:32]
-    //reg_la1_data = 0x00000000;
-
-    // Configure LA probes from [63:32] as inputs to disable counter write
-    //reg_la1_oenb = reg_la1_iena = 0x00000000; 
-
-    //reg_mprj_datal = 0xAB410000;
 
 	//print("Test\n\n");
 	//print("\n");
