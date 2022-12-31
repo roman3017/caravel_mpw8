@@ -130,7 +130,7 @@ jobs:
           make verify-usb2uart-gl
 
       - name: Push gds
-        if: github.event_name == 'workflow_dispatch'
+        #if: github.event_name == 'workflow_dispatch'
         run: |
           ls -la
           git status
