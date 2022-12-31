@@ -44,7 +44,10 @@ module usb2uart_tb;
 /*
 	wire mgmt_uart_tx;
 	assign mgmt_uart_tx = mprj_io[6];
+	//assign mprj_io[34] = mprj_io[6];
 */
+	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+
     // Signals Assignment
 	assign mprj_io[34] = user_uart_rx;
 
@@ -151,20 +154,18 @@ module usb2uart_tb;
     initial begin
         $dumpfile("usb2uart.vcd");
         $dumpvars(0, usb2uart_tb);
-		//$monitor("usb2uart.in_data: 0x%x", uut.mprj.mprj.usb2uart.in_data);
-
+		`ifdef GL
+		$monitor( "io_in[34]: 0x%x", uut.mprj.mprj.io_in[34] );
+		`else
+		$monitor( "usb2uart.in_data: 0x%x", uut.mprj.mprj.usb2uart.in_data );
+		`endif
         // Repeat cycles of 1000 clock edges as needed to complete testbench
-        repeat (100) begin
+        repeat (50) begin
             repeat (1000) @(posedge clock);
         end
-        $display("%c[1;31m",27);
-        `ifdef GL
-			$display ("Monitor: Timeout, Test Project USB (GL) Failed");
-		`else
-			$display ("Monitor: Timeout, Test Project USB (RTL) Failed");
-		`endif
-        $display("%c[0m",27);
-        $finish;
+		$error ("Monitor: Timeout, Test Project USB Failed");
+		//$fatal(1);
+		$finish;
     end
 
 	// Write a byte to RX pin
@@ -172,8 +173,10 @@ module usb2uart_tb;
 		input [7:0] i_Data;
 		integer     ii;
 	begin
-		wait(uut.mprj.mprj.usb2uart.in_ready == 1);
-
+		`ifdef GL
+		`else
+		//wait(uut.mprj.mprj.usb2uart.in_ready == 1);
+		`endif
 		// Write Start Bit
 		#(c_BIT_PERIOD) user_uart_rx <= 1'b0;
 
@@ -186,26 +189,44 @@ module usb2uart_tb;
 		// Write Stop Bit
 		#(c_BIT_PERIOD) user_uart_rx <= 1'b1;
 
+		`ifdef GL
+		//wait(uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tvalid_reg == 1);
+		`else
 		//@(posedge uut.mprj.mprj.usb2uart.in_valid);
-		wait(uut.mprj.mprj.usb2uart.in_valid == 1);
+		//wait(uut.mprj.mprj.usb2uart.in_valid == 1);
+		`endif
+		#(c_BIT_PERIOD);
 	end
 	endtask
 
 	initial begin		
 		// Exercise Rx
 		j=0;
-		for (i=0; i<8; i=i+1)
-		begin
+		for (i=0; i<8; i=i+1) begin
 			UART_WRITE_RX_AND_RCV(i);
+			`ifdef GL
+			k[7:0] = {
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[7] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[6] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[5] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[4] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[3] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[2] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[1] ,
+				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[0] };
+			`else
 			k = uut.mprj.mprj.usb2uart.in_data;
+			`endif
+
 			if (k == i)
 				j=j+1;
 			else
-				$display("RX Test Failed - Incorrect Byte Received 0x%x", k);
+				$error("RX Test Failed - Incorrect Byte Received 0x%x", k);
 		end
 		if (j == 8)
 			$display("RX Test Passed - Correct Bytes Received");
-
+		else
+			;//$fatal(2);
 		$finish;
 	end
 
@@ -276,6 +297,7 @@ module usb2uart_tb;
         .io2(),         // not used
         .io3()          // not used
     );
+
 /*
 	// Testbench UART
 	tbuart tbuart (

@@ -126,7 +126,6 @@ jobs:
           make verify-usb2uart-rtl
 
       - name: Run DV GL tests
-        if: failure()
         run: |
           make verify-usb2uart-gl
 
@@ -222,7 +221,6 @@ jobs:
           make verify-usb2uart-rtl
 
       - name: Run DV GL tests
-        if: failure()
         run: |
           make verify-usb2uart-gl
 
