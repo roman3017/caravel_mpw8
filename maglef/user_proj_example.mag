@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1672451169
+timestamp 1672542201
 << nwell >>
 rect 1066 116677 178886 117243
 rect 1066 115589 178886 116155
@@ -1332,7 +1332,7 @@ rect 157542 800 157650 856
 rect 157818 800 157926 856
 rect 158094 800 178368 856
 << obsm3 >>
-rect 4210 2143 178007 117537
+rect 4210 2143 173486 117537
 << metal4 >>
 rect 4208 2128 4528 117552
 rect 19568 2128 19888 117552
@@ -1347,10 +1347,10 @@ rect 142448 2128 142768 117552
 rect 157808 2128 158128 117552
 rect 173168 2128 173488 117552
 << obsm4 >>
-rect 125547 75243 127008 116517
-rect 127488 75243 142368 116517
-rect 142848 75243 157728 116517
-rect 158208 75243 171061 116517
+rect 64459 3435 65568 117197
+rect 66048 3435 80928 117197
+rect 81408 3435 96288 117197
+rect 96768 3435 99301 117197
 << labels >>
 rlabel metal2 s 1582 119200 1638 120000 6 io_in[0]
 port 1 nsew signal input
@@ -2596,8 +2596,8 @@ port 610 nsew signal input
 string FIXED_BBOX 0 0 180000 120000
 string LEFclass BLOCK
 string LEFview TRUE
-string GDS_END 14384854
-string GDS_FILE /home/runner/work/caravel_mpw8/caravel_mpw8/openlane/user_proj_example/runs/22_12_31_01_34/results/signoff/user_proj_example.magic.gds
-string GDS_START 918266
+string GDS_END 14217676
+string GDS_FILE /home/runner/work/caravel_mpw8/caravel_mpw8/openlane/user_proj_example/runs/23_01_01_02_53/results/signoff/user_proj_example.magic.gds
+string GDS_START 879168
 << end >>
 
