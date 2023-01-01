@@ -61,9 +61,9 @@ module user_proj_example #(
     input  [127:0] la_oenb,
 
     // IOs
-    input  [`MPRJ_IO_PADS-1:0] io_in,
-    output [`MPRJ_IO_PADS-1:0] io_out,
-    output [`MPRJ_IO_PADS-1:0] io_oeb,
+    input  [37:0] io_in,
+    output [37:0] io_out,
+    output [37:0] io_oeb,
 
     // User clock
     input user_clock2,
@@ -89,8 +89,8 @@ module user_proj_example #(
     assign la_data_out = 128'h00000000000000000000000000000000;
 
     // IO
-    assign io_out[`MPRJ_IO_PADS-6:0] = {(`MPRJ_IO_PADS-5){1'b0}};
-    assign io_oeb[`MPRJ_IO_PADS-6:0] = {(`MPRJ_IO_PADS-5){1'b1}};
+    assign io_oeb[15:0] = 16'hffff;
+    assign io_oeb[37:21] = 17'h1ffff;
 
     // IRQ
     assign irq = 3'b000;
@@ -98,27 +98,29 @@ module user_proj_example #(
     assign clk = user_clock2;
     assign rst = wb_rst_i;
 
-    // io_out[33] output uart_tx
-    assign io_oeb[`MPRJ_IO_PADS-5] = 1'b0;
-    assign io_out[`MPRJ_IO_PADS-5] = uart_tx;
+    // io_out[16] output usb_pu
+    assign io_oeb[16] = 1'b0;
+    assign io_out[16] = usb_pu;
 
-    // io_out[34] input uart_rx
-    assign io_oeb[`MPRJ_IO_PADS-4] = 1'b1;
-    assign uart_rx = io_in[`MPRJ_IO_PADS-4];
+    // io_out[17] inout usb_n
+    assign io_oeb[17] = ~usb_tx_en;
+    //assign io_out[17] = usb_tx_en ? usb_n;
+    assign io_out[17] = usb_n;
+    assign usb_n = io_in[17];
 
-    // io_out[35] output usb_pu
-    assign io_oeb[`MPRJ_IO_PADS-3] = 1'b0;
-    assign io_out[`MPRJ_IO_PADS-3] = usb_pu;
+    // io_out[18] inout usb_p
+    assign io_oeb[18] = ~usb_tx_en;
+    //assign io_out[18] = usb_tx_en ? usb_p;
+    assign io_out[18] = usb_p;
+    assign usb_p = io_in[18];
 
-    // io_out[36] inout usb_n
-    assign io_oeb[`MPRJ_IO_PADS-2] = ~usb_tx_en;
-    assign io_out[`MPRJ_IO_PADS-2] = /* usb_tx_en ? */ usb_n;
-    assign usb_n = io_in[`MPRJ_IO_PADS-2];
+    // io_out[19] input uart_rx
+    assign io_oeb[19] = 1'b1;
+    assign uart_rx = io_in[19];
 
-    // io_out[37] inout usb_p
-    assign io_oeb[`MPRJ_IO_PADS-1] = ~usb_tx_en;
-    assign io_out[`MPRJ_IO_PADS-1] = /* usb_tx_en ? */ usb_p;
-    assign usb_p = io_in[`MPRJ_IO_PADS-1];
+    // io_out[20] output uart_tx
+    assign io_oeb[20] = 1'b0;
+    assign io_out[20] = uart_tx;
 
     usb2uart usb2uart (
         .clk48(clk),

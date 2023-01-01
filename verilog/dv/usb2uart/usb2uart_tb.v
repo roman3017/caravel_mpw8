@@ -41,15 +41,16 @@ module usb2uart_tb;
     wire [37:0] mprj_io;
 
 	reg user_uart_rx;
+	
 /*
 	wire mgmt_uart_tx;
 	assign mgmt_uart_tx = mprj_io[6];
-	//assign mprj_io[34] = mprj_io[6];
 */
+
+	pullup(mprj_io[3]);
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 
-    // Signals Assignment
-	assign mprj_io[34] = user_uart_rx;
+	assign mprj_io[19] = user_uart_rx;
 
     always #(c_CLOCK_PERIOD_NS/2) clock <= (clock === 1'b0);
 
@@ -155,9 +156,9 @@ module usb2uart_tb;
         $dumpfile("usb2uart.vcd");
         $dumpvars(0, usb2uart_tb);
 		`ifdef GL
-		$monitor( "io_in[34]: 0x%x", uut.mprj.mprj.io_in[34] );
+		$monitor( "uart_rx_inst.rxd_reg: 0x%x", uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.rxd_reg );
 		`else
-		$monitor( "usb2uart.in_data: 0x%x", uut.mprj.mprj.usb2uart.in_data );
+		$monitor( "uart_rx_inst.rxd_reg: 0x%x", uut.mprj.mprj.usb2uart.u_uart.uart_rx_inst.rxd_reg );
 		`endif
         // Repeat cycles of 1000 clock edges as needed to complete testbench
         repeat (50) begin
@@ -200,8 +201,8 @@ module usb2uart_tb;
 	endtask
 
 	initial begin		
-		// Exercise Rx
-		j=0;
+		// Verify Rx data from uart to usb is correct
+		j=0; k=0;
 		for (i=0; i<8; i=i+1) begin
 			UART_WRITE_RX_AND_RCV(i);
 			`ifdef GL
@@ -215,7 +216,7 @@ module usb2uart_tb;
 				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[1] ,
 				uut.mprj.mprj.\usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg[0] };
 			`else
-			k = uut.mprj.mprj.usb2uart.in_data;
+			k[7:0] = uut.mprj.mprj.usb2uart.u_uart.uart_rx_inst.m_axis_tdata_reg ;
 			`endif
 
 			if (k == i)
@@ -232,11 +233,11 @@ module usb2uart_tb;
 
     // Reset Operation
     initial begin
-        CSB <= 1'b1;		
         RSTB <= 1'b0;
+        CSB <= 1'b1;		
         #2000;
         RSTB <= 1'b1;       	// Release reset
-        #1_300_000;
+        #300000;
         CSB <= 1'b0;		// Stop driving CSB
     end
 

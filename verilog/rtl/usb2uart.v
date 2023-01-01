@@ -20,6 +20,10 @@ module usb2uart (
     wire [7:0]       out_data;
     wire             out_valid;
 
+    //115200 bauds from 48MHz clock
+    //.prescale(((48*1000000)+(115200*8)-1)/(115200*8))
+    reg  [15:0]      prescale = 16'h0035;
+
     assign clk = clk48;
 
     uart # (
@@ -40,8 +44,7 @@ module usb2uart (
         .m_axis_tready(in_ready),
         .rxd(uart_rx),
         
-        //115200 bauds from 48MHz clock
-        .prescale(((48*1000000)+(115200*8)-1)/(115200*8))
+        .prescale(prescale)
     );
 
     wire             dp_pu;
