@@ -10,6 +10,9 @@ module usb2uart (
     output usb_pu,  // USB 1.5kOhm Pullup EN
     output usb_tx_en  // USB tx enabled
 );
+    //115200 bauds from 48MHz clock
+    //.prescale(((48*1000000)+(115200*8)-1)/(115200*8))
+    localparam    PRESCALE = 16'h0035;
 
     wire             clk;
 
@@ -19,10 +22,6 @@ module usb2uart (
     wire             out_ready;
     wire [7:0]       out_data;
     wire             out_valid;
-
-    //115200 bauds from 48MHz clock
-    //.prescale(((48*1000000)+(115200*8)-1)/(115200*8))
-    reg  [15:0]      prescale = 16'h0035;
 
     assign clk = clk48;
 
@@ -44,7 +43,7 @@ module usb2uart (
         .m_axis_tready(in_ready),
         .rxd(uart_rx),
         
-        .prescale(prescale)
+        .prescale(PRESCALE)
     );
 
     wire             dp_pu;
