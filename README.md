@@ -14,10 +14,12 @@ export PDK=sky130A
 make setup
 
 make user_proj_example
-klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user_proj_example.gds
+klayout -l $PDK_ROOT/$PDK/libs.tech/klayout/tech/$PDK.lyp gds/user_proj_example.gds
+magic -rcfile $PDK_ROOT/$PDK/libs.tech/magic/$PDK.magicrc gds/user_proj_example.gds
 
 make user_project_wrapper
-klayout -l dependencies/pdks/sky130A/libs.tech/klayout/tech/sky130A.lyp gds/user_project_wrapper.gds
+klayout -l $PDK_ROOT/$PDK/libs.tech/klayout/tech/$PDK.lyp gds/user_project_wrapper.gds
+magic -rcfile $PDK_ROOT/$PDK/libs.tech/magic/$PDK.magicrc gds/user_project_wrapper.gds
 
 make verify-usb2uart-rtl
 make verify-usb2uart-gl
